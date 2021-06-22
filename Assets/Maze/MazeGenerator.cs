@@ -8,7 +8,6 @@ public class MazeGenerator : IMazeGenerator
 {
 	private List<MazeTile> tileData;
 	private MazeTile[,] maze;
-	private MazeTile pathTile;
 	private MazeTile wallTile;
 	private int mazeWidth;
 	private int mazeHeight;
@@ -19,7 +18,6 @@ public class MazeGenerator : IMazeGenerator
 
 		// Find a tile to use as wall and path
 		wallTile = tileData.Find(tile => tile.isWall == true);
-		pathTile = tileData.Find(tile => tile.isWall == false);
 	}
 
 	public MazeTile[,] GenerateMaze(int mazeWidth, int mazeHeight)
@@ -48,7 +46,7 @@ public class MazeGenerator : IMazeGenerator
 	private void RecursiveMazeGeneration(int x, int y)
 	{
 		// Mark this as visited (set as path)
-		maze[x, y] = pathTile;
+		maze[x, y] = null;
 
 
 		// While it has any unvisited neighbours
@@ -68,7 +66,7 @@ public class MazeGenerator : IMazeGenerator
 			// Remove the wall between them
 			int offsetX = (neighbour.x - x) / 2;
 			int offsetY = (neighbour.y - y) / 2;
-			maze[x + offsetX, y + offsetY] = pathTile;
+			maze[x + offsetX, y + offsetY] = null;
 
 			// Invoke the routine recursively
 			RecursiveMazeGeneration(neighbour.x, neighbour.y);

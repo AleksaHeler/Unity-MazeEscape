@@ -24,7 +24,8 @@ public class MazeRenderer : IMazeRenderer
 				MazeTile tileData = maze[x, y];
 
 				// Set tile
-				tilemap.SetTile(position, tileData.tile);
+				if(tileData != null)
+					tilemap.SetTile(position, tileData.tile);
 			}
 		}
 	}
