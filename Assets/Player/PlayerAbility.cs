@@ -38,7 +38,7 @@ public class PlayerAbility : MonoBehaviour
 	{
         Instantiate(explosionParticles, transform.position, Quaternion.Euler(90, 0, 0), transform);
         CameraShake.Instance.ShakeCamera(cameraShakeAmount, cameraShakeDuration);
-        MazeMaster.Instance.DestryPlatformsInRange(transform.position, explosionRange);
+        MazeMaster.Instance.DestroyPlatformsInRange(transform.position, explosionRange);
         AudioManager.Instance.Play("Explosion");
     }
 }

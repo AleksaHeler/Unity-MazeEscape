@@ -46,21 +46,86 @@ public class AudioManager : MonoBehaviour, IAudioManager
 
 	public void Pause(string name)
 	{
-		throw new System.NotImplementedException();
+		foreach (Sound sound in sounds)
+		{
+			if (sound.name == name)
+			{
+				sound.source.Pause();
+				return;
+			}
+		}
 	}
 
 	public void Stop(string name)
 	{
-		throw new System.NotImplementedException();
+		foreach (Sound sound in sounds)
+		{
+			if (sound.name == name)
+			{
+				sound.source.Stop();
+				return;
+			}
+		}
 	}
 
 	public void FadeIn(string name, float duration)
 	{
-		throw new System.NotImplementedException();
+		foreach (Sound sound in sounds)
+		{
+			if (sound.name == name)
+			{
+				StartCoroutine(FadeInCoroutine(sound, duration));
+				return;
+			}
+		}
 	}
 
 	public void FadeOut(string name, float duration)
 	{
-		throw new System.NotImplementedException();
+		foreach (Sound sound in sounds)
+		{
+			if (sound.name == name)
+			{
+				StartCoroutine(FadeOutCoroutine(sound, duration));
+				return;
+			}
+		}
+	}
+
+	IEnumerator FadeInCoroutine(Sound sound, float duration)
+	{
+		float originalVolume = sound.volume;
+		
+		sound.source.volume = 0;
+		sound.source.Play();
+
+		float elapsedTime = 0;
+		while(elapsedTime < duration)
+		{
+			float percent = elapsedTime / duration;
+			sound.source.volume = Mathf.Lerp(0f, originalVolume, percent);
+			elapsedTime += Time.deltaTime;
+			yield return null;
+		}
+
+		sound.source.volume = originalVolume;
+	}
+	IEnumerator FadeOutCoroutine(Sound sound, float duration)
+	{
+		float originalVolume = sound.volume;
+
+		sound.source.volume = originalVolume;
+
+		float elapsedTime = 0;
+		while (elapsedTime < duration)
+		{
+			float inversePercent = 1f - elapsedTime / duration;
+			sound.source.volume = Mathf.Lerp(0f, originalVolume, inversePercent);
+			elapsedTime += Time.deltaTime;
+			yield return null;
+		}
+
+		sound.source.Stop();
+		sound.source.volume = originalVolume;
 	}
 }

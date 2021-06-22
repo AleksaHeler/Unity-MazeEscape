@@ -38,23 +38,8 @@ public class MazeMaster : MonoBehaviour
         mazeRenderer.RenderMaze(maze, mazeWidth, mazeHeight);
     }
 
-    public void DestryPlatformsInRange(Vector3 position, float range)
+    public void DestroyPlatformsInRange(Vector3 position, float range)
 	{
-        for (int i = 0; i < mazeWidth; i++)
-        {
-            for (int j = 0; j < mazeHeight; j++)
-            {
-                if (maze[i, j] == null)
-                    continue;
-
-                Vector3 tilePosition = new Vector3(i - mazeWidth / 2, j - mazeHeight / 2, 0);
-                float distance = Vector3.Distance(position, tilePosition);
-
-                if(distance < range)
-                    maze[i, j] = null;
-            }
-        }
-
-        mazeRenderer.RenderMaze(maze, mazeWidth, mazeHeight);
+        mazeRenderer.DestroyPlatformsInRange(position, range);
     }
 }
