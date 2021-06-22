@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour, IAudioManager
 {
-	private static AudioManager instance;
-	public static AudioManager Instance { get => instance; }
+	public static AudioManager Instance { get; private set; }
 
 	[SerializeField]
 	private List<Sound> sounds;
 
 	private void Awake()
 	{
-		if (instance != null && instance != this)
+		if (Instance != null && Instance != this)
 		{
 			Destroy(gameObject);
 		}
 		else
 		{
-			instance = this;
+			Instance = this;
 			DontDestroyOnLoad(gameObject);
 		}
 
@@ -35,7 +34,14 @@ public class AudioManager : MonoBehaviour, IAudioManager
 
 	public void Play(string name)
 	{
-		throw new System.NotImplementedException();
+		foreach(Sound sound in sounds)
+		{
+			if(sound.name == name)
+			{
+				sound.source.Play();
+				return;
+			}
+		}
 	}
 
 	public void Pause(string name)
