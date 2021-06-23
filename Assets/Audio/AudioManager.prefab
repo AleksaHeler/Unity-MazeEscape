@@ -50,3 +50,21 @@ MonoBehaviour:
     pitch: 1.6
     loop: 0
     source: {fileID: 0}
+  - name: Intro
+    clip: {fileID: 8300000, guid: 4e55c5b40fd468a43ab15cae5ced9ebc, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Main Menu Music
+    clip: {fileID: 8300000, guid: 4550eaa659fa45b42a195d7635fe92e9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Game Music
+    clip: {fileID: 8300000, guid: cf63e45c0ad293045bc0ad866e7aa8f3, type: 3}
+    volume: 0.6
+    pitch: 0.6
+    loop: 1
+    source: {fileID: 0}

@@ -7,6 +7,8 @@ using UnityEngine;
 public class MazeRenderer : MonoBehaviour, IMazeRenderer
 {
 	private Tilemap tilemap;
+	private int mazeWidth;
+	private int mazeHeight;
 
 	public MazeRenderer(Tilemap tilemap)
 	{
@@ -15,7 +17,11 @@ public class MazeRenderer : MonoBehaviour, IMazeRenderer
 
 	public void RenderMaze(MazeTile[,] maze, int mazeWidth, int mazeHeight)
 	{
+		this.mazeWidth = mazeWidth;
+		this.mazeHeight = mazeHeight;
+
 		TileBase wallTile = null;
+
 		foreach(MazeTile tile in maze)
 		{
 			if (tile == null)
@@ -46,6 +52,22 @@ public class MazeRenderer : MonoBehaviour, IMazeRenderer
 					tilemap.SetTile(position, tileData.tile);
 				else
 					tilemap.SetTile(position, null);
+			}
+		}
+	}
+
+	void IMazeRenderer.DestroyPlatformsInRange(Vector3 position, float range)
+	{
+		for (int i = 0; i < mazeWidth; i++)
+		{
+			for (int j = 0; j < mazeHeight; j++)
+			{
+				// Find distance from given position to currently observed platform
+				Vector3Int tilePosition = new Vector3Int(i - mazeWidth / 2, j - mazeHeight / 2, 0);
+				float distance = Vector3.Distance(position, tilePosition);
+
+				if (distance < range)
+					tilemap.SetTile(tilePosition, null);
 			}
 		}
 	}

@@ -445,6 +445,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleAnimator: {fileID: 1020244368}
   transitionAnimator: {fileID: 1342888460}
+  transitionDuration: 1
+  splashscreenDuration: 1
 --- !u!1001 &807578841
 PrefabInstance:
   m_ObjectHideFlags: 0
