@@ -4870,6 +4870,7 @@ MonoBehaviour:
   cameraShakeDuration: 0.2
   explosionRange: 2
   explosionParticles: {fileID: 6850537141273468892, guid: 08d36ff15ccca46459e9aaa2dfa2a351, type: 3}
+  dashAcceleration: 100
 --- !u!58 &8904657704977115557
 CircleCollider2D:
   m_ObjectHideFlags: 0
