@@ -4758,7 +4758,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4866,10 +4866,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e815adc35280ca046950d2c2c9677845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraShakeAmount: 3
-  cameraShakeDuration: 0.1
+  cameraShakeAmount: 1
+  cameraShakeDuration: 0.2
   explosionRange: 2
-  explosionParticles: {fileID: 7667389841551333179, guid: 08d36ff15ccca46459e9aaa2dfa2a351, type: 3}
+  explosionParticles: {fileID: 6850537141273468892, guid: 08d36ff15ccca46459e9aaa2dfa2a351, type: 3}
 --- !u!58 &8904657704977115557
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -9665,7 +9665,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
