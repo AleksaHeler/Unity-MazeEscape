@@ -10,11 +10,13 @@ public class MazeRenderer : MonoBehaviour, IMazeRenderer
 	private int mazeWidth;
 	private int mazeHeight;
 	private ParticleSystem tileExplosionParticles;
+	private List<Vector3> itemPositions;
 
 	public MazeRenderer(Tilemap tilemap, ParticleSystem tileExplosionParticles)
 	{
 		this.tilemap = tilemap;
 		this.tileExplosionParticles = tileExplosionParticles;
+		itemPositions = new List<Vector3>();
 	}
 
 	public void RenderMaze(MazeTile[,] maze, int mazeWidth, int mazeHeight)
@@ -58,7 +60,44 @@ public class MazeRenderer : MonoBehaviour, IMazeRenderer
 		}
 	}
 
-	void IMazeRenderer.DestroyPlatformsInRange(Vector3 position, float range)
+	public void SpawnItems(List<Item> items)
+	{
+		// go trough itemTilemap and place items where the tilemap[x,y] is null
+		foreach(Item item in items)
+		{
+			SpawnItems(item);
+		}
+	}
+
+	private void SpawnItems(Item item)
+	{
+		int count = Random.Range(item.minCount, item.maxCount);
+		for(int i = 0; i < count; i++)
+		{
+			SpawnAtRandomPosition(item.itemPrefab);
+		}
+	}
+
+	private void SpawnAtRandomPosition(GameObject item)
+	{
+		// First find position where there is no wall
+		Vector3Int position = Vector3Int.zero;
+		do
+		{
+			int x = Random.Range(0, mazeWidth);
+			int y = Random.Range(0, mazeHeight);
+			position = new Vector3Int(x - mazeWidth / 2, y - mazeHeight / 2, 0);
+
+			// If we already spawned an item here, just ignore
+			if (itemPositions.Contains(position) || position == Vector3Int.zero)
+				continue;
+		} while (tilemap.GetTile(position) != null);
+
+		Instantiate(item, position, Quaternion.identity);
+		itemPositions.Add(position);
+	}
+
+	public void DestroyPlatformsInRange(Vector3 position, float range)
 	{
 		for (int i = 0; i < mazeWidth; i++)
 		{

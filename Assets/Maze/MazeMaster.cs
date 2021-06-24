@@ -19,6 +19,8 @@ public class MazeMaster : MonoBehaviour
     private List<MazeTile> tileData;
     [SerializeField]
     private ParticleSystem tileExplosionParticles;
+    [SerializeField]
+    private List<Item> items;
 
     private IMazeGenerator mazeGenerator;
     private IMazeRenderer mazeRenderer;
@@ -38,6 +40,7 @@ public class MazeMaster : MonoBehaviour
         mazeRenderer = new MazeRenderer(tilemap, tileExplosionParticles);
         maze = mazeGenerator.GenerateMaze(mazeWidth, mazeHeight);
         mazeRenderer.RenderMaze(maze, mazeWidth, mazeHeight);
+        mazeRenderer.SpawnItems(items);
     }
 
     public void DestroyPlatformsInRange(Vector3 position, float range)

@@ -23,8 +23,6 @@ public class PlayerAbility : MonoBehaviour
     private float dashCooldown = 2f;
     private float dashTimer = 0f;
 
-    public int Coins { get; private set; }
-
 
     Dictionary<KeyCode, Action> inputHandler;
 
@@ -84,4 +82,15 @@ public class PlayerAbility : MonoBehaviour
             yield return null;
 		}
 	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Only collect items with right tags
+        if (!collision.gameObject.tag.Equals("Item"))
+            return;
+
+        IItem item = collision.gameObject.GetComponent<IItem>();
+        if (item != null)
+            item.PickUp();
+    }
 }

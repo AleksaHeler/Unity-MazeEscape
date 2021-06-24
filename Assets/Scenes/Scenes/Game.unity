@@ -1445,6 +1445,16 @@ MonoBehaviour:
   tileData:
   - {fileID: 11400000, guid: 186c40894fd8ee543b1af8bbbea59d92, type: 2}
   tileExplosionParticles: {fileID: 4822496010947562410, guid: 936e035fed65b3b4387183a0b8187a9d, type: 3}
+  items:
+  - itemPrefab: {fileID: 7881048953054913230, guid: 4955f4d03585f3a46bff9e273a77f9a1, type: 3}
+    minCount: 2
+    maxCount: 5
+  - itemPrefab: {fileID: 7129829354202863519, guid: ac5ea56c963298f4baea9e329b6594ec, type: 3}
+    minCount: 3
+    maxCount: 3
+  - itemPrefab: {fileID: 1523479330404032264, guid: c781eaa752fc2fc48b4f687ce150f41e, type: 3}
+    minCount: 2
+    maxCount: 5
 --- !u!4 &1784199666
 Transform:
   m_ObjectHideFlags: 0
