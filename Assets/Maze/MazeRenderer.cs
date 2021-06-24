@@ -11,12 +11,17 @@ public class MazeRenderer : MonoBehaviour, IMazeRenderer
 	private int mazeHeight;
 	private ParticleSystem tileExplosionParticles;
 	private List<Vector3> itemPositions;
+	private int excessSpaceAroundMaze;
+	private Transform itemsParent;
 
-	public MazeRenderer(Tilemap tilemap, ParticleSystem tileExplosionParticles)
+
+	public MazeRenderer(Tilemap tilemap, ParticleSystem tileExplosionParticles, int excessSpaceAroundMaze)
 	{
 		this.tilemap = tilemap;
 		this.tileExplosionParticles = tileExplosionParticles;
+		this.excessSpaceAroundMaze = excessSpaceAroundMaze;
 		itemPositions = new List<Vector3>();
+		itemsParent = new GameObject("Items").transform;
 	}
 
 	public void RenderMaze(MazeTile[,] maze, int mazeWidth, int mazeHeight)
@@ -26,20 +31,20 @@ public class MazeRenderer : MonoBehaviour, IMazeRenderer
 
 		TileBase wallTile = null;
 
-		foreach(MazeTile tile in maze)
+		foreach (MazeTile tile in maze)
 		{
 			if (tile == null)
 				continue;
-			if(tile.isWall == true)
+			if (tile.isWall == true)
 			{
 				wallTile = tile.tile;
 				break;
 			}
 		}
 
-		for (int x = -30; x < mazeWidth + 30; x++)
+		for (int x = -excessSpaceAroundMaze; x < mazeWidth + excessSpaceAroundMaze; x++)
 		{
-			for(int y = -30; y < mazeHeight + 30; y++)
+			for (int y = -excessSpaceAroundMaze; y < mazeHeight + excessSpaceAroundMaze; y++)
 			{
 				// Calculate position
 				Vector3Int position = new Vector3Int(x - mazeWidth / 2, y - mazeHeight / 2, 0);
@@ -52,7 +57,7 @@ public class MazeRenderer : MonoBehaviour, IMazeRenderer
 
 				// Set tile
 				MazeTile tileData = maze[x, y];
-				if(tileData != null)
+				if (tileData != null)
 					tilemap.SetTile(position, tileData.tile);
 				else
 					tilemap.SetTile(position, null);
@@ -60,19 +65,35 @@ public class MazeRenderer : MonoBehaviour, IMazeRenderer
 		}
 	}
 
+	public void ClearMaze()
+	{
+		// Set all tiles to null
+		for (int x = -excessSpaceAroundMaze; x < mazeWidth + excessSpaceAroundMaze; x++)
+		{
+			for (int y = -excessSpaceAroundMaze; y < mazeHeight + excessSpaceAroundMaze; y++)
+			{
+				Vector3Int position = new Vector3Int(x - mazeWidth / 2, y - mazeHeight / 2, 0);
+				tilemap.SetTile(position, null);
+			}
+		}
+
+		// Destroy all items
+		Destroy(itemsParent.gameObject);
+		itemsParent = new GameObject("Items").transform;
+	}
+
 	public void SpawnItems(List<Item> items)
 	{
-		// go trough itemTilemap and place items where the tilemap[x,y] is null
-		foreach(Item item in items)
+		foreach (Item item in items)
 		{
-			SpawnItems(item);
+			SpawnItem(item);
 		}
 	}
 
-	private void SpawnItems(Item item)
+	private void SpawnItem(Item item)
 	{
 		int count = Random.Range(item.minCount, item.maxCount);
-		for(int i = 0; i < count; i++)
+		for (int i = 0; i < count; i++)
 		{
 			SpawnAtRandomPosition(item.itemPrefab);
 		}
@@ -93,7 +114,7 @@ public class MazeRenderer : MonoBehaviour, IMazeRenderer
 				continue;
 		} while (tilemap.GetTile(position) != null);
 
-		Instantiate(item, position, Quaternion.identity);
+		Instantiate(item, position, Quaternion.identity, itemsParent);
 		itemPositions.Add(position);
 	}
 
@@ -109,11 +130,12 @@ public class MazeRenderer : MonoBehaviour, IMazeRenderer
 
 				if (distance < range)
 				{
-					if(tilemap.GetTile(tilePosition) != null)
+					if (tilemap.GetTile(tilePosition) != null)
 						Instantiate(tileExplosionParticles, tilePosition, Quaternion.identity);
 					tilemap.SetTile(tilePosition, null);
 				}
 			}
 		}
 	}
+
 }

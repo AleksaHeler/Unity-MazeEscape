@@ -27,6 +27,7 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField]
     private float dashCooldown = 2f;
     private float dashTimer = 0f;
+    private GameObject snappedPortal;
 
     public int ExplosionsCount { get; private set; }
     public int CoinsCount { get; private set; }
@@ -37,14 +38,12 @@ public class PlayerAbility : MonoBehaviour
 
     Dictionary<KeyCode, Action> inputHandler;
     public static event Action OnPlayerDeath = delegate { };
-    public static event Action OnPortalEnter = delegate { };
+    public static event Action<Vector3> OnPortalEnter = delegate { };
+    public static event Action OnLevelChanged = delegate { };
 
     private void Awake()
 	{
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
+        Instance = this;
 
         inputHandler = new Dictionary<KeyCode, Action>();
 
@@ -111,7 +110,7 @@ public class PlayerAbility : MonoBehaviour
             HandleItemCollection(collision.gameObject);
 
         if (collision.gameObject.tag.Equals("Portal"))
-            HandlePortal();
+            HandlePortal(collision.gameObject);
 
     }
 
@@ -122,17 +121,26 @@ public class PlayerAbility : MonoBehaviour
             item.PickUp();
     }
 
-    private void HandlePortal()
+    private void HandlePortal(GameObject portalGameObject)
 	{
         if(KeysCount < 3)
 		{
             return;
 		}
 
-        Debug.Log("Traveling trough portal");
         KeysCount = 0;
-        OnPortalEnter();
+        ExplosionsCount = startingExplosions;
+        dashTimer = 0;
+        snappedPortal = portalGameObject;
+        Time.timeScale = 0.6f;
+        OnPortalEnter(portalGameObject.transform.position);
     }
+
+    public void TriggerLevelChange()
+    {
+        Time.timeScale = 1f;
+        OnLevelChanged();
+	}
 
     public void AddCoin()
     {

@@ -13,39 +13,65 @@ public class PlayerMovement : MonoBehaviour
     private float rotationSpeed = 20f;
 
     private Rigidbody2D rigidbody;
-    private Vector3 movement;
+
+    // Snapping to portal (animation for going trough)
+    private bool freeMovement;
+    private Vector3 snappedPortalPosition;
 
     private void Start()
 	{
         rigidbody = GetComponent<Rigidbody2D>();
+
+        // Subscribe to event callback
+        PlayerAbility.OnPortalEnter += SnapToPortal;
+
+        // Reset variables
+        freeMovement = true;
+        snappedPortalPosition = Vector3.zero;
     }
 
 	void Update()
     {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 10;
-        Vector3 direction = Camera.main.ScreenToWorldPoint(mousePos) - transform.position;
+        // If we dont have free movement, look towards the portal
+        Vector3 target = freeMovement ? GetMousePositionInWorldCoordinates() : snappedPortalPosition;
+        Vector3 direction = target - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
-
     }
 
 	private void FixedUpdate()
 	{
-        if (Input.GetMouseButton(0))
+        if (freeMovement && Input.GetMouseButton(0))
         {
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.z = 10;
-            Vector3 direction = Camera.main.ScreenToWorldPoint(mousePos) - transform.position;
+            Vector3 direction = GetMousePositionInWorldCoordinates() - transform.position;
+            MoveForward(direction);
+        }
+
+		if (!freeMovement)
+        {
+            Vector3 direction = snappedPortalPosition - transform.position;
             MoveForward(direction);
         }
     }
 
+    private Vector3 GetMousePositionInWorldCoordinates()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 10;
+        return Camera.main.ScreenToWorldPoint(mousePos);
+    }
+
 	private void MoveForward(Vector3 direction)
     {
-        movement = direction.normalized;
+        Vector3 movement = direction.normalized;
         rigidbody.AddForce(movement * acceleration);
         rigidbody.velocity = Vector2.ClampMagnitude(rigidbody.velocity, speed);
+	}
+
+    public void SnapToPortal(Vector3 portalPosition)
+	{
+        freeMovement = false;
+        snappedPortalPosition = portalPosition;
 	}
 }

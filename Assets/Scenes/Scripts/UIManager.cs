@@ -55,6 +55,12 @@ public class UIManager : MonoBehaviour
 			QuitGame();
 		}
 
+		if (playerAbility == null)
+		{
+			playerAbility = PlayerAbility.Instance;
+			return;
+		}
+
 		HandleCoinsUI();
 		HandleKeysUI();
 		HandleExplosionsUI();
@@ -63,14 +69,7 @@ public class UIManager : MonoBehaviour
 
 	private void HandleCoinsUI()
 	{
-		if (playerAbility == null)
-		{
-			playerAbility = PlayerAbility.Instance;
-		}
-		else
-		{
-			coinsText.text = playerAbility.CoinsCount.ToString();
-		}
+		coinsText.text = playerAbility.CoinsCount.ToString();
 	}
 
 	private void HandleKeysUI()
@@ -152,19 +151,21 @@ public class UIManager : MonoBehaviour
 	{
 		sceneTransitionAnimator.Play("FadeOut");
 		AudioManager.Instance.FadeOut(gameMusicName, sceneTransitionDuration / 2f);
+
 		yield return new WaitForSeconds(sceneTransitionDuration);
-		Debug.Log("TODO: implement switching to next level");
+		playerAbility.TriggerLevelChange();
+
+		sceneTransitionAnimator.Play("FadeIn");
+		AudioManager.Instance.FadeIn(gameMusicName, sceneTransitionDuration / 2f);
 	}
 
 	private void OnPlayerDeath()
 	{
-		Debug.Log("[UIManager] Player died, switching to game over");
 		StartCoroutine(GameOverCoroutine());
 	}
 
-	private void OnPortalEnter()
+	private void OnPortalEnter(Vector3 portalPosition)
 	{
-		Debug.Log("[UIManager] Player entered portal, switching to next level");
 		StartCoroutine(NextLevelCoroutine());
 	}
 }

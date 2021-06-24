@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 using UnityEngine;
+using System;
 
 // Handles maze -> has generator and renderer component and interconnects them
 public class MazeMaster : MonoBehaviour
@@ -21,11 +22,12 @@ public class MazeMaster : MonoBehaviour
     private ParticleSystem tileExplosionParticles;
     [SerializeField]
     private List<Item> items;
+    [SerializeField]
+	private int excessSpaceAroundMaze = 50;
 
     private IMazeGenerator mazeGenerator;
     private IMazeRenderer mazeRenderer;
     private MazeTile[,] maze;
-
 
     private void Awake()
     {
@@ -37,8 +39,18 @@ public class MazeMaster : MonoBehaviour
 
         // Generate and render maze
         mazeGenerator = new MazeGenerator(tileData);
-        mazeRenderer = new MazeRenderer(tilemap, tileExplosionParticles);
+        mazeRenderer = new MazeRenderer(tilemap, tileExplosionParticles, excessSpaceAroundMaze);
         maze = mazeGenerator.GenerateMaze(mazeWidth, mazeHeight);
+        mazeRenderer.RenderMaze(maze, mazeWidth, mazeHeight);
+        mazeRenderer.SpawnItems(items);
+
+        PlayerAbility.OnLevelChanged += OnLevelChangedCallback;
+    }
+
+	private void OnLevelChangedCallback()
+	{
+        maze = mazeGenerator.GenerateMaze(mazeWidth, mazeHeight);
+        mazeRenderer.ClearMaze();
         mazeRenderer.RenderMaze(maze, mazeWidth, mazeHeight);
         mazeRenderer.SpawnItems(items);
     }
