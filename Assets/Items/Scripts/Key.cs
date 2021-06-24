@@ -6,7 +6,7 @@ public class Key : MonoBehaviour, IItem
 {
 	public void PickUp()
 	{
-		Debug.Log("I am being picked up");
+		PlayerAbility.Instance.AddKey();
 		Destroy(gameObject);
 	}
 }

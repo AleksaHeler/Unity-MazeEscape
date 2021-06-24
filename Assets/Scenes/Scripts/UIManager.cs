@@ -15,6 +15,15 @@ public class UIManager : MonoBehaviour
     {
         sceneTransitionAnimator.Play("FadeIn");
 		AudioManager.Instance.FadeIn(gameMusicName, sceneTransitionDuration / 2f);
+
+		PlayerAbility.OnPlayerDeath += OnPlayerDeath;
+		PlayerAbility.OnPortalEnter += OnPortalEnter;
+	}
+
+	private void OnDestroy()
+	{
+		PlayerAbility.OnPlayerDeath -= OnPlayerDeath;
+		PlayerAbility.OnPortalEnter -= OnPortalEnter;
 	}
 
 	private void Update()
@@ -36,5 +45,33 @@ public class UIManager : MonoBehaviour
 		AudioManager.Instance.FadeOut(gameMusicName, sceneTransitionDuration / 2f);
 		yield return new WaitForSeconds(sceneTransitionDuration);
 		Application.Quit();
+	}
+
+	IEnumerator GameOverCoroutine()
+	{
+		sceneTransitionAnimator.Play("FadeOut");
+		AudioManager.Instance.FadeOut(gameMusicName, sceneTransitionDuration / 2f);
+		yield return new WaitForSeconds(sceneTransitionDuration);
+		SceneLoader.Instance.LoadScene("GameOver");
+	}
+
+	IEnumerator NextLevelCoroutine()
+	{
+		sceneTransitionAnimator.Play("FadeOut");
+		AudioManager.Instance.FadeOut(gameMusicName, sceneTransitionDuration / 2f);
+		yield return new WaitForSeconds(sceneTransitionDuration);
+		Debug.Log("TODO: implement switching to next level");
+	}
+
+	private void OnPlayerDeath()
+	{
+		Debug.Log("[UIManager] Player died, switching to game over");
+		StartCoroutine(GameOverCoroutine());
+	}
+
+	private void OnPortalEnter()
+	{
+		Debug.Log("[UIManager] Player entered portal, switching to next level");
+		StartCoroutine(NextLevelCoroutine());
 	}
 }

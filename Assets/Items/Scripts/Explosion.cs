@@ -6,7 +6,7 @@ public class Explosion : MonoBehaviour, IItem
 {
 	public void PickUp()
 	{
-		Debug.Log("I am being picked up");
+		PlayerAbility.Instance.AddExplosion();
 		Destroy(gameObject);
 	}
 }

@@ -212,3 +212,4 @@ Received Import Request.
 Start importing Assets/Sprites/Items/explosion.png using Guid(98535d6759c32f147a7ce0ec9afdeffb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2ed9fb87926134d48d646ce4e460af62') in 0.189825 seconds 
   Import took 0.199837 seconds .
 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file

@@ -25,6 +25,15 @@ public class CameraShake : MonoBehaviour
 		virtualCamera = GetComponent<CinemachineVirtualCamera>();
 	}
 
+	private void Start()
+	{
+		if (virtualCamera.Follow == null)
+		{
+			if (PlayerAbility.Instance != null)
+				virtualCamera.Follow = PlayerAbility.Instance.transform;
+		}
+	}
+
 	private void Update()
 	{
 		if(shakeTimer > 0)

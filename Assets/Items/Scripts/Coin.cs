@@ -6,7 +6,7 @@ public class Coin : MonoBehaviour, IItem
 {
 	public void PickUp()
 	{
-		Debug.Log("I am being picked up");
+		PlayerAbility.Instance.AddCoin();
 		Destroy(gameObject);
 	}
 }
