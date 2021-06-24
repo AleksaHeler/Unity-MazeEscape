@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerAbility : MonoBehaviour
 {
+    private const string playerPrefsCoinsKey = "Coins";
     public static PlayerAbility Instance { get; private set; }
 
     [Header("Explosion settings")]
@@ -27,9 +28,11 @@ public class PlayerAbility : MonoBehaviour
     private float dashCooldown = 2f;
     private float dashTimer = 0f;
 
-    public int ExplosionCount { get; private set; }
+    public int ExplosionsCount { get; private set; }
     public int CoinsCount { get; private set; }
     public int KeysCount { get; private set; }
+    public float DashTimer { get => dashTimer; }
+    public float DashCooldownTime { get => dashCooldown; }
 
 
     Dictionary<KeyCode, Action> inputHandler;
@@ -48,7 +51,8 @@ public class PlayerAbility : MonoBehaviour
         inputHandler.Add(KeyCode.Space, Explode);
         inputHandler.Add(KeyCode.Mouse1, Dash);
 
-        ExplosionCount = startingExplosions;
+        ExplosionsCount = startingExplosions;
+        LoadCoinsFromPrefs();
     }
 
 	void Update()
@@ -63,7 +67,7 @@ public class PlayerAbility : MonoBehaviour
 
     private void Explode()
 	{
-        if(ExplosionCount <= 0)
+        if(ExplosionsCount <= 0)
 		{
             return;
 		}
@@ -71,7 +75,7 @@ public class PlayerAbility : MonoBehaviour
         CameraShake.Instance.ShakeCamera(cameraShakeAmount, cameraShakeDuration);
         MazeMaster.Instance.DestroyPlatformsInRange(transform.position, explosionRange);
         AudioManager.Instance.Play("Explosion");
-        ExplosionCount--;
+        ExplosionsCount--;
     }
 
     private void Dash()
@@ -133,13 +137,27 @@ public class PlayerAbility : MonoBehaviour
     public void AddCoin()
     {
         CoinsCount++;
+        PlayerPrefs.SetInt(playerPrefsCoinsKey, CoinsCount);
     }
     public void AddExplosion()
     {
-        ExplosionCount++;
+        ExplosionsCount++;
     }
     public void AddKey()
     {
         KeysCount++;
     }
+
+    private void LoadCoinsFromPrefs()
+	{
+		if (PlayerPrefs.HasKey(playerPrefsCoinsKey))
+        {
+            CoinsCount = PlayerPrefs.GetInt(playerPrefsCoinsKey);
+        }
+		else
+        {
+            CoinsCount = 0;
+            PlayerPrefs.SetInt(playerPrefsCoinsKey, 0);
+        }
+	}
 }
