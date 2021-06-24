@@ -27,22 +27,29 @@ public class CameraShake : MonoBehaviour
 
 	private void Start()
 	{
-		if (virtualCamera.Follow == null)
-		{
-			if (PlayerAbility.Instance != null)
-				virtualCamera.Follow = PlayerAbility.Instance.transform;
-		}
+		SetFollowTarget();
 	}
 
 	private void Update()
 	{
-		if(shakeTimer > 0)
+		SetFollowTarget();
+
+		if (shakeTimer > 0)
 		{
 			shakeTimer -= Time.deltaTime;
 			if(shakeTimer <= 0)
 			{
 				SetCameraShakeInensity(0);
 			}
+		}
+	}
+
+	private void SetFollowTarget()
+	{
+		if (virtualCamera.Follow == null)
+		{
+			if (PlayerAbility.Instance != null)
+				virtualCamera.Follow = PlayerAbility.Instance.transform;
 		}
 	}
 
