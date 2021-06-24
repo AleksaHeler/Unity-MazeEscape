@@ -17,6 +17,8 @@ public class MazeMaster : MonoBehaviour
     private Tilemap tilemap;
     [SerializeField]
     private List<MazeTile> tileData;
+    [SerializeField]
+    private ParticleSystem tileExplosionParticles;
 
     private IMazeGenerator mazeGenerator;
     private IMazeRenderer mazeRenderer;
@@ -33,7 +35,7 @@ public class MazeMaster : MonoBehaviour
 
         // Generate and render maze
         mazeGenerator = new MazeGenerator(tileData);
-        mazeRenderer = new MazeRenderer(tilemap);
+        mazeRenderer = new MazeRenderer(tilemap, tileExplosionParticles);
         maze = mazeGenerator.GenerateMaze(mazeWidth, mazeHeight);
         mazeRenderer.RenderMaze(maze, mazeWidth, mazeHeight);
     }

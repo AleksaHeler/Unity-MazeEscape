@@ -9,10 +9,12 @@ public class MazeRenderer : MonoBehaviour, IMazeRenderer
 	private Tilemap tilemap;
 	private int mazeWidth;
 	private int mazeHeight;
+	private ParticleSystem tileExplosionParticles;
 
-	public MazeRenderer(Tilemap tilemap)
+	public MazeRenderer(Tilemap tilemap, ParticleSystem tileExplosionParticles)
 	{
 		this.tilemap = tilemap;
+		this.tileExplosionParticles = tileExplosionParticles;
 	}
 
 	public void RenderMaze(MazeTile[,] maze, int mazeWidth, int mazeHeight)
@@ -67,7 +69,11 @@ public class MazeRenderer : MonoBehaviour, IMazeRenderer
 				float distance = Vector3.Distance(position, tilePosition);
 
 				if (distance < range)
+				{
+					if(tilemap.GetTile(tilePosition) != null)
+						Instantiate(tileExplosionParticles, tilePosition, Quaternion.identity);
 					tilemap.SetTile(tilePosition, null);
+				}
 			}
 		}
 	}
