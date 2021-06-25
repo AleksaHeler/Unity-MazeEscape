@@ -4922,10 +4922,10 @@ MonoBehaviour:
   targetDirection: {fileID: 896615243364918753}
   length: 30
   targetDistance: 0.03
-  smoothSpeed: 0.02
-  trailSpeed: 350
-  wiggleSpeed: 3
-  wiggleMagnitude: 10
+  smoothSpeed: 0.01
+  trailSpeed: 400
+  wiggleSpeed: 2
+  wiggleMagnitude: 1
   wiggleDirection: {fileID: 896615244486905255}
 --- !u!120 &4907562152174073642
 LineRenderer:
