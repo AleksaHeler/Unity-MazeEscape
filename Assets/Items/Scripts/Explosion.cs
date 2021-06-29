@@ -7,6 +7,7 @@ public class Explosion : MonoBehaviour, IItem
 	public void PickUp()
 	{
 		PlayerAbility.Instance.AddExplosion();
+		AudioManager.Instance.Play("Pop");
 		Destroy(gameObject);
 	}
 }

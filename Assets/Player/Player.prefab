@@ -4978,7 +4978,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.29999924
+        value: 0.21738815
         inSlope: -0.18716712
         outSlope: -0.18716712
         tangentMode: 0
@@ -4986,22 +4986,13 @@ LineRenderer:
         inWeight: 0.33333334
         outWeight: 0.3180354
       - serializedVersion: 3
-        time: 0.47997165
-        value: 0.18122828
-        inSlope: -0.27602956
-        outSlope: -0.27602956
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.31707528
-      - serializedVersion: 3
         time: 1
-        value: 0.07142639
-        inSlope: -0.19108589
-        outSlope: -0.19108589
+        value: 0.07246399
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.28754726
+        inWeight: 0
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -5011,7 +5002,7 @@ LineRenderer:
       key0: {r: 1, g: 1, b: 1, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 0.78431374}
       key2: {r: 0, g: 0, b: 0, a: 0.5019608}
-      key3: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0.52763534}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
@@ -5025,16 +5016,16 @@ LineRenderer:
       ctime6: 0
       ctime7: 0
       atime0: 11565
-      atime1: 22359
-      atime2: 43562
-      atime3: 65535
-      atime4: 0
+      atime1: 20046
+      atime2: 33539
+      atime3: 41634
+      atime4: 65535
       atime5: 0
       atime6: 0
       atime7: 0
       m_Mode: 0
       m_NumColorKeys: 2
-      m_NumAlphaKeys: 4
+      m_NumAlphaKeys: 5
     numCornerVertices: 0
     numCapVertices: 20
     alignment: 0
@@ -5091,9 +5082,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791dec7ad95bb8a4fa757467b40837a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 2
   acceleration: 20
-  rotationSpeed: 20
+  rotationSpeed: 15
 --- !u!114 &5467874258179148573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5112,6 +5103,7 @@ MonoBehaviour:
   startingExplosions: 2
   maxExplosions: 5
   explosionParticles: {fileID: 6850537141273468892, guid: 08d36ff15ccca46459e9aaa2dfa2a351, type: 3}
+  portalPrefab: {fileID: 5587166722664670214, guid: fcb686cb33a3951419bef65d229c1c4f, type: 3}
   dashDistance: 2
   dashCooldown: 2
 --- !u!58 &8638706526010525719
@@ -5129,7 +5121,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.1
 --- !u!50 &8638706526010525717
 Rigidbody2D:
   serializedVersion: 4
@@ -5142,7 +5134,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.05
   m_LinearDrag: 0.2
   m_AngularDrag: 0
   m_GravityScale: 0

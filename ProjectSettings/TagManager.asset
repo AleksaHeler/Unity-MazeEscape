@@ -6,11 +6,13 @@ TagManager:
   tags:
   - Item
   - Portal
+  - Maze
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Maze
   - Water
   - UI
   - 

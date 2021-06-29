@@ -220,6 +220,7 @@ RectTransform:
   - {fileID: 1820995824}
   - {fileID: 1274215466}
   - {fileID: 1233276014}
+  - {fileID: 875485522}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -246,9 +247,9 @@ MonoBehaviour:
   coinsText: {fileID: 2111033668}
   disabledAlpha: 0.25
   enabledAlpha: 1
-  keysImages:
-  - {fileID: 214991054}
+  fragmentsImages:
   - {fileID: 1626942025}
+  - {fileID: 214991054}
   - {fileID: 2077219557}
   explosionsImages:
   - {fileID: 1947077909}
@@ -969,7 +970,7 @@ GameObject:
   - component: {fileID: 214991054}
   - component: {fileID: 214991056}
   m_Layer: 5
-  m_Name: Key
+  m_Name: Fragment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -982,13 +983,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 214991052}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 537440699}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1014,7 +1015,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0d86c92c0b4cc674dbeb927acbdeb8f6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09d7affcf33327e4695c7429e431321e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1284,7 +1285,7 @@ GameObject:
   - component: {fileID: 537440700}
   - component: {fileID: 537440702}
   m_Layer: 5
-  m_Name: KeysUI
+  m_Name: FragmentsUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1301,8 +1302,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 214991053}
   - {fileID: 1626942024}
+  - {fileID: 214991053}
   - {fileID: 2077219556}
   m_Father: {fileID: 21798051}
   m_RootOrder: 0
@@ -1760,12 +1761,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 875485519}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 148.36377, y: 148.36377, z: 148.36377}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 21798051}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &887937804
 GameObject:
@@ -2186,9 +2187,9 @@ GameObject:
   - component: {fileID: 1191952773}
   - component: {fileID: 1191952775}
   - component: {fileID: 1191952776}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MazeTilemap
-  m_TagString: Untagged
+  m_TagString: Maze
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4106,7 +4107,7 @@ GameObject:
   - component: {fileID: 1626942025}
   - component: {fileID: 1626942027}
   m_Layer: 5
-  m_Name: Key
+  m_Name: Fragment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4119,13 +4120,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626942023}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 537440699}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -4151,7 +4152,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0d86c92c0b4cc674dbeb927acbdeb8f6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09d7affcf33327e4695c7429e431321e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4331,17 +4332,17 @@ MonoBehaviour:
     minCount: 1
     maxCount: 1
   - itemPrefab: {fileID: 6788217406144912068, guid: 9127efb0f793b934c84463478f07b511, type: 3}
-    minCount: 1
-    maxCount: 1
+    minCount: 3
+    maxCount: 3
   - itemPrefab: {fileID: 7881048953054913230, guid: 4955f4d03585f3a46bff9e273a77f9a1, type: 3}
     minCount: 2
     maxCount: 5
-  - itemPrefab: {fileID: 6013150624011122995, guid: ac5ea56c963298f4baea9e329b6594ec, type: 3}
-    minCount: 3
-    maxCount: 3
   - itemPrefab: {fileID: 8023207188747828198, guid: c781eaa752fc2fc48b4f687ce150f41e, type: 3}
     minCount: 2
     maxCount: 5
+  - itemPrefab: {fileID: 7048132054654487729, guid: f82b1d8e1da79d843b02ca4df88a5ab1, type: 3}
+    minCount: 2
+    maxCount: 4
   excessSpaceAroundMaze: 50
 --- !u!4 &1784199666
 Transform:
@@ -4958,7 +4959,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: AllIn1SpriteShader/AllIn1SpriteShader
   m_Shader: {fileID: 4800000, guid: a36b7719ff0465b42ab1407d67672c5f, type: 3}
-  m_ShaderKeywords: ALPHAROUND_ON DOODLE_ON
+  m_ShaderKeywords: ALPHAROUND_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -5291,7 +5292,7 @@ GameObject:
   - component: {fileID: 2077219557}
   - component: {fileID: 2077219559}
   m_Layer: 5
-  m_Name: Key
+  m_Name: Fragment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5304,13 +5305,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2077219555}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 537440699}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -5336,7 +5337,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0d86c92c0b4cc674dbeb927acbdeb8f6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09d7affcf33327e4695c7429e431321e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

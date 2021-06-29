@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
 	[Range(0f, 1f)]
 	private float enabledAlpha = 1f;
 	[SerializeField]
-	private List<Image> keysImages;
+	private List<Image> fragmentsImages;
 	[SerializeField]
 	private List<Image> explosionsImages;
 	[SerializeField]
@@ -75,16 +75,16 @@ public class UIManager : MonoBehaviour
 	private void HandleKeysUI()
 	{
 		// Set all to disabled
-		foreach(Image image in keysImages)
+		foreach(Image image in fragmentsImages)
 			SetImageAlpha(image, disabledAlpha);
 
 		// Set right amount to enabled
-		int keysCount = playerAbility.KeysCount;
-		if (keysCount > keysImages.Count)
-			keysCount = keysImages.Count;
+		int keysCount = playerAbility.PortalFragments;
+		if (keysCount > fragmentsImages.Count)
+			keysCount = fragmentsImages.Count;
 		for (int i = 0; i < keysCount; i++)
 		{
-			SetImageAlpha(keysImages[i], enabledAlpha);
+			SetImageAlpha(fragmentsImages[i], enabledAlpha);
 		}
 	}
 

@@ -21,6 +21,8 @@ public class PlayerAbility : MonoBehaviour
     private int maxExplosions = 5;
     [SerializeField]
     private ParticleSystem explosionParticles;
+    [SerializeField]
+    private GameObject portalPrefab;
     [Header("Dash settings")]
     [SerializeField]
     private float dashDistance = 2f;
@@ -31,15 +33,17 @@ public class PlayerAbility : MonoBehaviour
 
     public int ExplosionsCount { get; private set; }
     public int CoinsCount { get; private set; }
-    public int KeysCount { get; private set; }
+    public int PortalFragments { get; private set; }
     public float DashTimer { get => dashTimer; }
     public float DashCooldownTime { get => dashCooldown; }
+    public float ExplosionRange { get => explosionRange; }
 
 
     Dictionary<KeyCode, Action> inputHandler;
     public static event Action OnPlayerDeath = delegate { };
     public static event Action<Vector3> OnPortalEnter = delegate { };
     public static event Action OnLevelChanged = delegate { };
+    public static event Action<Vector3> OnExplosion = delegate { };
 
     private void Awake()
 	{
@@ -62,6 +66,9 @@ public class PlayerAbility : MonoBehaviour
             if (Input.GetKeyDown(keyCode))
                 inputHandler[keyCode]();
 		}
+
+        // Check if we have all fragments to create the portal
+        HandlePortal();
     }
 
     private void Explode()
@@ -75,6 +82,7 @@ public class PlayerAbility : MonoBehaviour
         MazeMaster.Instance.DestroyPlatformsInRange(transform.position, explosionRange);
         AudioManager.Instance.Play("Explosion");
         ExplosionsCount--;
+        OnExplosion(transform.position);
     }
 
     private void Dash()
@@ -108,10 +116,8 @@ public class PlayerAbility : MonoBehaviour
         // Only collect items with right tags
         if (collision.gameObject.tag.Equals("Item"))
             HandleItemCollection(collision.gameObject);
-
-        if (collision.gameObject.tag.Equals("Portal"))
-            HandlePortal(collision.gameObject);
-
+        if (collision.gameObject.tag.Equals("Enemy"))
+            Die();
     }
 
     private void HandleItemCollection(GameObject itemGameObject)
@@ -121,24 +127,26 @@ public class PlayerAbility : MonoBehaviour
             item.PickUp();
     }
 
-    private void HandlePortal(GameObject portalGameObject)
+    private void HandlePortal()
 	{
-        if(KeysCount < 3)
+        if(PortalFragments < 3)
 		{
             return;
 		}
 
-        KeysCount = 0;
+        PortalFragments = 0;
         ExplosionsCount = startingExplosions;
         dashTimer = 0;
-        snappedPortal = portalGameObject;
+        Vector3Int position = new Vector3Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), 0);
+        snappedPortal = Instantiate(portalPrefab, position, Quaternion.identity);
         Time.timeScale = 0.6f;
-        OnPortalEnter(portalGameObject.transform.position);
+        OnPortalEnter(snappedPortal.transform.position);
     }
 
     public void TriggerLevelChange()
     {
         Time.timeScale = 1f;
+        Destroy(snappedPortal);
         OnLevelChanged();
 	}
 
@@ -151,9 +159,9 @@ public class PlayerAbility : MonoBehaviour
     {
         ExplosionsCount++;
     }
-    public void AddKey()
+    public void AddPortalFragment()
     {
-        KeysCount++;
+        PortalFragments++;
     }
 
     private void LoadCoinsFromPrefs()
@@ -168,4 +176,10 @@ public class PlayerAbility : MonoBehaviour
             PlayerPrefs.SetInt(playerPrefsCoinsKey, 0);
         }
 	}
+
+    private void Die()
+	{
+        OnPlayerDeath();
+        Destroy(gameObject);
+    }
 }

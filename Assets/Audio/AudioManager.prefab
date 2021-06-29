@@ -68,6 +68,12 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     source: {fileID: 0}
+  - name: Pop
+    clip: {fileID: 8300000, guid: 4bcb36d8863168a4cb02ec38dfed92a9, type: 3}
+    volume: 0.8
+    pitch: 0.8
+    loop: 0
+    source: {fileID: 0}
   - name: Game Music
     clip: {fileID: 8300000, guid: cf63e45c0ad293045bc0ad866e7aa8f3, type: 3}
     volume: 0.6

@@ -7,6 +7,7 @@ public class Coin : MonoBehaviour, IItem
 	public void PickUp()
 	{
 		PlayerAbility.Instance.AddCoin();
+		AudioManager.Instance.Play("Pop");
 		Destroy(gameObject);
 	}
 }

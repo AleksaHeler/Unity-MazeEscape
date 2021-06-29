@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float speed = 2f;
     [SerializeField]
-    private float acceleration = 15f;
+    private float acceleration = 450f;
     [SerializeField]
     private float rotationSpeed = 20f;
 
@@ -30,10 +30,15 @@ public class PlayerMovement : MonoBehaviour
         snappedPortalPosition = Vector3.zero;
     }
 
+	private void OnDestroy()
+    {
+        PlayerAbility.OnPortalEnter -= SnapToPortal;
+    }
+
 	void Update()
     {
-        // If we dont have free movement, look towards the portal
-        Vector3 target = freeMovement ? GetMousePositionInWorldCoordinates() : snappedPortalPosition;
+        // Look towards the mouse
+        Vector3 target = GetMousePositionInWorldCoordinates();
         Vector3 direction = target - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -41,21 +46,23 @@ public class PlayerMovement : MonoBehaviour
     }
 
 	private void FixedUpdate()
-	{
-        if (freeMovement && Input.GetMouseButton(0))
+    {
+        // Move the player
+        float distanceFromPlayerToMouse = Vector3.Distance(transform.position, GetMousePositionInWorldCoordinates());
+        if (freeMovement && Input.GetMouseButton(0) && distanceFromPlayerToMouse > 0.5f)
         {
-            Vector3 direction = GetMousePositionInWorldCoordinates() - transform.position;
-            MoveForward(direction);
+            Vector3 moveDirection = GetMousePositionInWorldCoordinates() - transform.position;
+            MoveForward(moveDirection);
         }
 
-		if (!freeMovement)
+        if (!freeMovement)
         {
-            Vector3 direction = snappedPortalPosition - transform.position;
-            MoveForward(direction);
+            Vector3 moveDirection = snappedPortalPosition - transform.position;
+            MoveForward(moveDirection);
         }
     }
 
-    private Vector3 GetMousePositionInWorldCoordinates()
+	private Vector3 GetMousePositionInWorldCoordinates()
     {
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = 10;
@@ -63,11 +70,12 @@ public class PlayerMovement : MonoBehaviour
     }
 
 	private void MoveForward(Vector3 direction)
-    {
-        Vector3 movement = direction.normalized;
-        rigidbody.AddForce(movement * acceleration);
+	{
+        Vector3 movement = Vector3.ClampMagnitude(direction, 2f) * 0.5f;
+		rigidbody.AddForce(movement * acceleration * Time.fixedDeltaTime);
+        Vector2 velocityBefore = rigidbody.velocity;
         rigidbody.velocity = Vector2.ClampMagnitude(rigidbody.velocity, speed);
-	}
+    }
 
     public void SnapToPortal(Vector3 portalPosition)
 	{

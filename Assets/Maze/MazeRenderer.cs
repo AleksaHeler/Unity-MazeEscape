@@ -13,6 +13,7 @@ public class MazeRenderer : MonoBehaviour, IMazeRenderer
 	private List<Vector3> itemPositions;
 	private int excessSpaceAroundMaze;
 	private Transform itemsParent;
+	private GameObject pathfinder;
 
 
 	public MazeRenderer(Tilemap tilemap, ParticleSystem tileExplosionParticles, int excessSpaceAroundMaze)
@@ -80,6 +81,7 @@ public class MazeRenderer : MonoBehaviour, IMazeRenderer
 		// Destroy all items
 		Destroy(itemsParent.gameObject);
 		itemsParent = new GameObject("Items").transform;
+		itemPositions = new List<Vector3>();
 	}
 
 	public void SpawnItems(List<Item> items)

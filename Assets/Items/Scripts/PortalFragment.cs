@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Key : MonoBehaviour, IItem
+public class PortalFragment : MonoBehaviour, IItem
 {
 	public void PickUp()
 	{
-		PlayerAbility.Instance.AddKey();
+		PlayerAbility.Instance.AddPortalFragment();
+		AudioManager.Instance.Play("Pop");
 		Destroy(gameObject);
 	}
 }
